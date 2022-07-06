@@ -1,0 +1,10 @@
+1. Tampilkan daftar office diurutkan berdasarkan Country, State, City.
+    SELECT officeCode,country,state,city
+    FROM offices
+    ORDER by country, state, city;
+
+2. Ada berapa orang karyawan di perusahaan?
+    SELECT COUNT(*) AS banyak_karyawan FROM employees;
+
+3. Berapa total pembayaran yang telah di terima?
+    SELECT FORMAT(SUM(amount),0) AS total_pembayaran FROM payments;

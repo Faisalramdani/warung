@@ -1,0 +1,15 @@
+Fitur Pemilik :
+
+1. Buat fitur laporan penjualan (Done)
+2. 
+
+
+Fitur Admin :
+
+1. Buat fitur invoice pembelian (Progress)
+2. Buat fitur kupon untuk setiap pembelian () 
+
+
+Fitur Query :
+
+1. Ambil semua data penjualan.
