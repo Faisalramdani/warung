@@ -40,7 +40,7 @@
                 <li class="nav-item has-treeview">
                     <a href="{{ route('cart.index') }}" class="nav-link {{ activeSegment('cart') }}">
                         <i class="nav-icon fas fa-cart-plus"></i>
-                        <p>Buka POS</p>
+                        <p>Transaksi</p>
                     </a>
                 </li>
                 @endif

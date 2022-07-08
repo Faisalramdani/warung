@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('first_name', 20);
             $table->string('last_name', 20);
-            $table->string('email')->nullable();
+            // $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->string('avatar')->nullable();
+            // $table->string('avatar')->nullable();
             $table->foreignId('user_id');
             $table->timestamps();
 

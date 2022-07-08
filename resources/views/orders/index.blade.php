@@ -3,7 +3,11 @@
 @section('title', 'Penjualan')
 @section('content-header', 'Penjualan')
 @section('content-actions')
-    <a href="{{route('cart.index')}}" class="btn btn-primary">Buka POS</a>
+@if (Auth::user()->role_id == 1)
+
+@else
+<a href="{{route('cart.index')}}" class="btn btn-primary">Transaksi</a>
+@endif
 @endsection
 
 @section('content')
@@ -32,6 +36,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Nama</th>
+                    <th>Kode Transaksi</th>
                     <th>Total harga</th>
                     <th>Uang di terima</th>
                     <th>Status</th>
@@ -45,6 +50,7 @@
                 <tr>
                     <td>{{$order->id}}</td>
                     <td>{{$order->getCustomerName()}}</td>
+                    <td>{{$order->orderItem->code_transaction}}</td>
                     <td>{{ config('settings.currency_symbol') }} {{$order->formattedTotal()}}</td>
                     <td>{{ config('settings.currency_symbol') }} {{$order->formattedReceivedAmount()}}</td>
                     <td>
@@ -81,8 +87,10 @@
                 <tr>
                     <th></th>
                     <th></th>
+                    <th></th>
                     <th>{{ config('settings.currency_symbol') }} {{ number_format($total, 2) }}</th>
                     <th>{{ config('settings.currency_symbol') }} {{ number_format($receivedAmount, 2) }}</th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>

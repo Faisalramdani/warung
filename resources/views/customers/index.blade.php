@@ -15,26 +15,25 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Avatar</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
+                    {{-- <th>Foto</th> --}}
+                    <th>Nama</th>
+                    <!-- <th>Last Name</th> -->
+                    {{-- <th>Email</th> --}}
+                    <th>No Telpon</th>
+                    <th>Alamat</th>
+                    <th>Tanggal di buat</th>
+                    <th>Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($customers as $customer)
                     <tr>
                         <td>{{$customer->id}}</td>
-                        <td>
+                        {{-- <td>
                             <img width="50" src="{{ $customer->getAvatarUrl()}}" alt="">
-                        </td>
-                        <td>{{$customer->first_name}}</td>
-                        <td>{{$customer->last_name}}</td>
-                        <td>{{$customer->email}}</td>
+                        </td> --}}
+                        <td>{{$customer->first_name}} . {{$customer->last_name}}</td>
+                        {{-- <td>{{$customer->email}}</td> --}}
                         <td>{{$customer->phone}}</td>
                         <td>{{$customer->address}}</td>
                         <td>{{$customer->created_at}}</td>

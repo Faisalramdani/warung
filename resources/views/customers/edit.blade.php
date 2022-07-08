@@ -36,7 +36,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" id="email"
                            placeholder="Email" value="{{ old('email', $customer->email) }}">
@@ -45,7 +45,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="form-group">
                     <label for="phone">Phone</label>
@@ -70,7 +70,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="avatar">Avatar</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="avatar" id="avatar">
@@ -81,7 +81,7 @@
                     <strong>{{ $message }}</strong>
                 </span>
                     @enderror
-                </div>
+                </div> --}}
 
 
                 <button class="btn btn-primary" type="submit">Update</button>

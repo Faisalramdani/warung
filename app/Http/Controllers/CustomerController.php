@@ -23,6 +23,9 @@ class CustomerController extends Controller
             );
         }
         $customers = Customer::latest()->paginate(10);
+
+        // dd($customers);
+
         return view('customers.index')->with('customers', $customers);
     }
 
@@ -44,19 +47,22 @@ class CustomerController extends Controller
      */
     public function store(CustomerStoreRequest $request)
     {
-        $avatar_path = '';
 
-        if ($request->hasFile('avatar')) {
-            $avatar_path = $request->file('avatar')->store('customers', 'public');
-        }
+        // dd($request);
+
+        // $avatar_path = '';
+
+        // if ($request->hasFile('avatar')) {
+        //     $avatar_path = $request->file('avatar')->store('customers', 'public');
+        // }
 
         $customer = Customer::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'email' => $request->email,
+            // 'email' => $request->email,
             'phone' => $request->phone,
             'address' => $request->address,
-            'avatar' => $avatar_path,
+            // 'avatar' => $avatar_path,
             'user_id' => $request->user()->id,
         ]);
 
@@ -96,22 +102,25 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
+
+        // dd($request);
+
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
-        $customer->email = $request->email;
+        // $customer->email = $request->email;
         $customer->phone = $request->phone;
         $customer->address = $request->address;
 
-        if ($request->hasFile('avatar')) {
-            // Delete old avatar
-            if ($customer->avatar) {
-                Storage::delete($customer->avatar);
-            }
-            // Store avatar
-            $avatar_path = $request->file('avatar')->store('customers', 'public');
-            // Save to Database
-            $customer->avatar = $avatar_path;
-        }
+        // if ($request->hasFile('avatar')) {
+        //     // Delete old avatar
+        //     if ($customer->avatar) {
+        //         Storage::delete($customer->avatar);
+        //     }
+        //     // Store avatar
+        //     $avatar_path = $request->file('avatar')->store('customers', 'public');
+        //     // Save to Database
+        //     $customer->avatar = $avatar_path;
+        // }
 
         if (!$customer->save()) {
             return redirect()->back()->with('error', 'Sorry, there\'re a problem while updating customer.');
@@ -121,9 +130,9 @@ class CustomerController extends Controller
 
     public function destroy(Customer $customer)
     {
-        if ($customer->avatar) {
-            Storage::delete($customer->avatar);
-        }
+        // if ($customer->avatar) {
+        //     Storage::delete($customer->avatar);
+        // }
 
         $customer->delete();
 

@@ -12,7 +12,7 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="first_name">First Name</label>
+                    <label for="first_name">Nama depan</label>
                     <input type="text" name="first_name" class="form-control @error('first_name') is-invalid @enderror"
                            id="first_name"
                            placeholder="First Name" value="{{ old('first_name') }}">
@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="last_name">Last Name</label>
+                    <label for="last_name">Nama belakang</label>
                     <input type="text" name="last_name" class="form-control @error('last_name') is-invalid @enderror"
                            id="last_name"
                            placeholder="Last Name" value="{{ old('last_name') }}">
@@ -35,7 +35,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" id="email"
                            placeholder="Email" value="{{ old('email') }}">
@@ -44,10 +44,10 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="form-group">
-                    <label for="phone">Phone</label>
+                    <label for="phone">No Telpon</label>
                     <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone"
                            placeholder="Phone" value="{{ old('phone') }}">
                     @error('phone')
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Address</label>
+                    <label for="address">Alamat</label>
                     <input type="text" name="address" class="form-control @error('address') is-invalid @enderror"
                            id="address"
                            placeholder="Address" value="{{ old('address') }}">
@@ -69,8 +69,8 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
-                    <label for="avatar">Avatar</label>
+                {{-- <div class="form-group">
+                    <label for="avatar">Foto</label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" name="avatar" id="avatar">
                         <label class="custom-file-label" for="avatar">Choose file</label>
@@ -80,7 +80,7 @@
                     <strong>{{ $message }}</strong>
                 </span>
                     @enderror
-                </div>
+                </div> --}}
 
 
                 <button class="btn btn-primary" type="submit">Create</button>

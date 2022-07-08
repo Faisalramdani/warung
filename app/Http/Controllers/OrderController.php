@@ -11,6 +11,7 @@ use PDF;
 class OrderController extends Controller
 {
     public function index(Request $request) {
+
         $orders = new Order();
         if($request->start_date) {
             $orders = $orders->where('created_at', '>=', $request->start_date);
@@ -33,17 +34,23 @@ class OrderController extends Controller
 
     public function store(OrderStoreRequest $request)
     {
+        
+        
         $order = Order::create([
             'customer_id' => $request->customer_id,
             'user_id' => $request->user()->id,
         ]);
-
+        
         $cart = $request->user()->cart()->get();
+
         foreach ($cart as $item) {
+            
+            
             $order->items()->create([
                 'price' => $item->price * $item->pivot->quantity,
                 'quantity' => $item->pivot->quantity,
                 'product_id' => $item->id,
+                'code_transaction' => $request->customer_id .'/'. $item->id .'/'. \date('d-m-y'),
             ]);
             $item->quantity = $item->quantity - $item->pivot->quantity;
             $item->save();

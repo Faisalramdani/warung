@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Product')
-@section('content-header', 'Edit Product')
+@section('title', 'Edit Produk')
+@section('content-header', 'Edit Produk')
 
 @section('content')
 
@@ -13,7 +13,7 @@
             @method('PUT')
 
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">Nama</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
                     placeholder="Name" value="{{ old('name', $product->name) }}">
                 @error('name')
@@ -25,7 +25,7 @@
 
 
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description">Deskripsi</label>
                 <textarea name="description" class="form-control @error('description') is-invalid @enderror"
                     id="description"
                     placeholder="description">{{ old('description', $product->description) }}</textarea>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Image</label>
+                <label for="image">Gambar</label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="image" id="image">
                     <label class="custom-file-label" for="image">Choose file</label>
@@ -61,7 +61,18 @@
             </div>
 
             <div class="form-group">
-                <label for="price">Price</label>
+                <label for="price">Harga Beli</label>
+                <input type="text" name="price_buy" class="form-control @error('price_buy') is-invalid @enderror" id="price"
+                    placeholder="Harga beli" value="{{ old('price_buy', $product->price_buy) }}">
+                @error('price')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="price">Harga Jual</label>
                 <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="price"
                     placeholder="price" value="{{ old('price', $product->price) }}">
                 @error('price')
@@ -72,7 +83,7 @@
             </div>
 
             <div class="form-group">
-                <label for="quantity">Quantity</label>
+                <label for="quantity">Jumlah</label>
                 <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"
                     id="quantity" placeholder="Quantity" value="{{ old('quantity', $product->quantity) }}">
                 @error('quantity')

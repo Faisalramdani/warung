@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Product List')
-@section('content-header', 'Product List')
+@section('title', 'Produk')
+@section('content-header', 'Produk')
 @section('content-actions')
 <a href="{{route('products.create')}}" class="btn btn-primary">Create Product</a>
 @endsection
@@ -15,15 +15,16 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Image</th>
+                    <th>Nama</th>
+                    <th>Gambar</th>
                     <th>Barcode</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th>Harga Beli</th>
+                    <th>Harga Jual</th>
+                    <th>Jumlah</th>
                     <th>Status</th>
-                    <th>Created At</th>
-                    <th>Updated At</th>
-                    <th>Actions</th>
+                    <th>Tanggal di buat</th>
+                    <th>Tanggal di perbaharui</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                     <td>{{$product->name}}</td>
                     <td><img class="product-img" src="{{ Storage::url($product->image) }}" alt=""></td>
                     <td>{{$product->barcode}}</td>
+                    <td>{{$product->price_buy}}</td>
                     <td>{{$product->price}}</td>
                     <td>{{$product->quantity}}</td>
                     <td>

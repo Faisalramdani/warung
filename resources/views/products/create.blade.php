@@ -12,9 +12,9 @@
             @csrf
 
             <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">Nama</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name"
-                    placeholder="Name" value="{{ old('name') }}">
+                    placeholder="Nama" value="{{ old('name') }}">
                 @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -24,9 +24,9 @@
 
 
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="description">Deskripsi</label>
                 <textarea name="description" class="form-control @error('description') is-invalid @enderror"
-                    id="description" placeholder="description">{{ old('description') }}</textarea>
+                    id="description" placeholder="deskripsi">{{ old('description') }}</textarea>
                 @error('description')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -35,7 +35,7 @@
             </div>
 
             <div class="form-group">
-                <label for="image">Image</label>
+                <label for="image">Gambar</label>
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="image" id="image">
                     <label class="custom-file-label" for="image">Choose file</label>
@@ -59,9 +59,9 @@
             </div>
 
             <div class="form-group">
-                <label for="price">Price</label>
-                <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="price"
-                    placeholder="price" value="{{ old('price') }}">
+                <label for="price">Harga beli</label>
+                <input type="text" name="price_buy" class="form-control @error('price') is-invalid @enderror" id="price"
+                    placeholder="harga beli" value="{{ old('price') }}">
                 @error('price')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -70,9 +70,20 @@
             </div>
 
             <div class="form-group">
-                <label for="quantity">Quantity</label>
+                <label for="price">Harga</label>
+                <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" id="price"
+                    placeholder="harga" value="{{ old('price') }}">
+                @error('price')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Jumlah</label>
                 <input type="text" name="quantity" class="form-control @error('quantity') is-invalid @enderror"
-                    id="quantity" placeholder="Quantity" value="{{ old('quantity', 1) }}">
+                    id="quantity" placeholder="jumlah" value="{{ old('quantity', 1) }}">
                 @error('quantity')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -83,8 +94,8 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" class="form-control @error('status') is-invalid @enderror" id="status">
-                    <option value="1" {{ old('status') === 1 ? 'selected' : ''}}>Active</option>
-                    <option value="0" {{ old('status') === 0 ? 'selected' : ''}}>Inactive</option>
+                    <option value="1" {{ old('status') === 1 ? 'selected' : ''}}>Aktif</option>
+                    <option value="0" {{ old('status') === 0 ? 'selected' : ''}}>Tidak Aktif</option>
                 </select>
                 @error('status')
                 <span class="invalid-feedback" role="alert">
