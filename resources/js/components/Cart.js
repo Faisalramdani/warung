@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { sum } from "lodash";
 
 class Cart extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +28,9 @@ class Cart extends Component {
         this.handleSeach = this.handleSeach.bind(this);
         this.setCustomerId = this.setCustomerId.bind(this);
         this.handleClickSubmit = this.handleClickSubmit.bind(this)
+
+        // this.setInputChange = this.setInputChange.bind(this)
+        // this.getInputChange = this.getInputChange.bind(this)
     }
 
     componentDidMount() {
@@ -101,6 +105,13 @@ class Cart extends Component {
         const total = cart.map(c => c.pivot.quantity * c.price);
         return sum(total).toFixed(2);
     }
+
+    // total kembalian
+    handleInputChange(event){
+       const change = this.getInputChange(event.target.value);
+       console.log(change);
+    }
+
     handleClickDelete(product_id) {
         axios
             .post("/admin/cart/delete", { product_id, _method: "DELETE" })
@@ -174,6 +185,13 @@ class Cart extends Component {
             title: 'Received Amount',
             input: 'text',
             inputValue: this.getTotal(this.state.cart),
+            onOpen: () => {
+                const input = Swal.getInput()
+                input.oninput = () => {
+                  // perform validation here
+                  this.handleInputChange;
+                }
+              },
             showCancelButton: true,
             confirmButtonText: 'Send',
             showLoaderOnConfirm: true,
@@ -199,7 +217,7 @@ class Cart extends Component {
             <div className="row">
                 <div className="col-md-6 col-lg-4">
                     <div className="row mb-2">
-                        <div className="col">
+                        {/* <div className="col">
                             <form onSubmit={this.handleScanBarcode}>
                                 <input
                                     type="text"
@@ -209,7 +227,7 @@ class Cart extends Component {
                                     onChange={this.handleOnChangeBarcode}
                                 />
                             </form>
-                        </div>
+                        </div> */}
                         <div className="col">
                             <select
                                 className="form-control"
@@ -230,9 +248,9 @@ class Cart extends Component {
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Product Name</th>
-                                        <th>Quantity</th>
-                                        <th className="text-right">Price</th>
+                                        <th>Nama Produk</th>
+                                        <th>Jumlah</th>
+                                        <th className="text-right">Harga</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -309,7 +327,7 @@ class Cart extends Component {
                         <input
                             type="text"
                             className="form-control"
-                            placeholder="Search Product..."
+                            placeholder="Cari Produk..."
                             onChange={this.handleChangeSearch}
                             onKeyDown={this.handleSeach}
                         />

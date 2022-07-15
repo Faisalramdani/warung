@@ -65,4 +65,7 @@
           <!-- ./col -->
     </div>
 </div>
+
+<div id="HelloReact" ></div>
+
 @endsection
