@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2022 at 07:02 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.0.19
+-- Waktu pembuatan: 18 Jul 2022 pada 14.27
+-- Versi server: 10.4.24-MariaDB
+-- Versi PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,33 +24,38 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Struktur dari tabel `accounts`
+--
+
+CREATE TABLE `accounts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `no_account` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nm_account` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `customers`
 --
 
 CREATE TABLE `customers` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `first_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `phone`, `address`, `avatar`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Toni', 'yansyah', 'toni@mail.com', '0831821282', 'cikampak', 'customers/Q7Hu8e7iAvGotiXgmAWAOKTl4RnI4ufRZKdOqGZ3.png', 1, '2022-06-18 21:40:23', '2022-06-18 21:40:23');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `failed_jobs`
+-- Struktur dari tabel `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -65,7 +70,23 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `journals`
+--
+
+CREATE TABLE `journals` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `no_journal` varchar(14) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keterangan` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tgl_journal` date NOT NULL,
+  `no_akun` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `debet` int(11) NOT NULL,
+  `kredit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -75,7 +96,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -90,12 +111,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2020_05_04_165730_create_orders_table', 1),
 (10, '2020_05_04_165749_create_order_items_table', 1),
 (11, '2020_05_04_165822_create_payments_table', 1),
-(12, '2022_03_21_125336_change_price_column', 1);
+(12, '2022_03_21_125336_change_price_column', 1),
+(13, '2022_07_02_051027_create_journals_table', 1),
+(14, '2022_07_02_053627_create_accounts_table', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Struktur dari tabel `orders`
 --
 
 CREATE TABLE `orders` (
@@ -107,21 +130,17 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `orders`
+-- Dumping data untuk tabel `orders`
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2022-06-18 21:41:29', '2022-06-18 21:41:29'),
-(2, 1, 1, '2022-06-18 21:41:35', '2022-06-18 21:41:35'),
-(3, 1, 1, '2022-06-18 21:41:38', '2022-06-18 21:41:38'),
-(4, 1, 1, '2022-06-18 21:41:43', '2022-06-18 21:41:43'),
-(5, NULL, 1, '2022-06-18 21:43:19', '2022-06-18 21:43:19'),
-(6, NULL, 1, '2022-06-18 21:45:00', '2022-06-18 21:45:00');
+(1, NULL, 1, '2022-07-18 02:48:38', '2022-07-18 02:48:38'),
+(11, NULL, 1, '2022-07-18 05:26:37', '2022-07-18 05:26:37');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_items`
+-- Struktur dari tabel `order_items`
 --
 
 CREATE TABLE `order_items` (
@@ -130,26 +149,23 @@ CREATE TABLE `order_items` (
   `quantity` int(11) NOT NULL DEFAULT 1,
   `order_id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) UNSIGNED NOT NULL,
+  `code_transaction` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `order_items`
+-- Dumping data untuk tabel `order_items`
 --
 
-INSERT INTO `order_items` (`id`, `price`, `quantity`, `order_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(1, '5000000.0000', 10, 1, 2, '2022-06-18 21:41:29', '2022-06-18 21:41:29'),
-(2, '120000000.0000', 12, 1, 1, '2022-06-18 21:41:29', '2022-06-18 21:41:29'),
-(3, '500000.0000', 1, 5, 2, '2022-06-18 21:43:19', '2022-06-18 21:43:19'),
-(4, '10000000.0000', 1, 5, 1, '2022-06-18 21:43:19', '2022-06-18 21:43:19'),
-(5, '200000000.0000', 20, 6, 1, '2022-06-18 21:45:00', '2022-06-18 21:45:00'),
-(6, '1500000.0000', 3, 6, 2, '2022-06-18 21:45:00', '2022-06-18 21:45:00');
+INSERT INTO `order_items` (`id`, `price`, `quantity`, `order_id`, `product_id`, `code_transaction`, `created_at`, `updated_at`) VALUES
+(1, '50000.0000', 1, 1, 1, '/1/18-07-22', '2022-07-18 02:48:38', '2022-07-18 02:48:38'),
+(7, '50000.0000', 1, 11, 1, '/1/18-07-22', '2022-07-18 05:26:37', '2022-07-18 05:26:37');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Struktur dari tabel `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -161,7 +177,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payments`
+-- Struktur dari tabel `payments`
 --
 
 CREATE TABLE `payments` (
@@ -174,18 +190,17 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `payments`
+-- Dumping data untuk tabel `payments`
 --
 
 INSERT INTO `payments` (`id`, `amount`, `order_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, '125000000.0000', 4, 1, '2022-06-18 21:41:43', '2022-06-18 21:41:43'),
-(2, '10500000.0000', 5, 1, '2022-06-18 21:43:19', '2022-06-18 21:43:19'),
-(3, '201500000.0000', 6, 1, '2022-06-18 21:45:00', '2022-06-18 21:45:00');
+(1, '100000.0000', 1, 1, '2022-07-18 02:48:38', '2022-07-18 02:48:38'),
+(11, '100000.0000', 11, 1, '2022-07-18 05:26:37', '2022-07-18 05:26:37');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Struktur dari tabel `products`
 --
 
 CREATE TABLE `products` (
@@ -194,6 +209,7 @@ CREATE TABLE `products` (
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `barcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price_buy` decimal(8,2) NOT NULL,
   `price` decimal(14,2) NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 1,
   `status` tinyint(1) NOT NULL DEFAULT 1,
@@ -202,17 +218,16 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `products`
+-- Dumping data untuk tabel `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `image`, `barcode`, `price`, `quantity`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'asas', 'sas', 'products/fuTfRCLnxQ51ckMROr8jz6RnXyzLv5uqYrQTLkGz.jpg', '12131212', '10000000.00', 99979, 1, '2022-06-18 21:25:15', '2022-06-18 21:45:00'),
-(2, 'susu', 'susu', 'products/s3FncrfXy0fqp59bl5p6d6SZazKenRYvOR9fcBoy.png', '12871821', '500000.00', 100, 1, '2022-06-18 21:39:44', '2022-06-18 21:58:57');
+INSERT INTO `products` (`id`, `name`, `description`, `image`, `barcode`, `price_buy`, `price`, `quantity`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Aqua', 'Air mineral galon', 'products/UN40oJ1jPMJHDYouTp0ZeTaBX0D0RAEn75QNEMC1.png', '#12126656', '25000.00', '50000.00', 9, 1, '2022-07-15 06:54:13', '2022-07-18 05:26:37');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `settings`
+-- Struktur dari tabel `settings`
 --
 
 CREATE TABLE `settings` (
@@ -224,19 +239,19 @@ CREATE TABLE `settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `settings`
+-- Dumping data untuk tabel `settings`
 --
 
 INSERT INTO `settings` (`id`, `key`, `value`, `created_at`, `updated_at`) VALUES
-(1, 'app_name', 'Warung', '2022-06-18 11:34:59', '2022-06-18 21:45:51'),
-(2, 'currency_symbol', 'Rp', '2022-06-18 11:34:59', '2022-06-18 21:24:17'),
-(3, 'app_description', NULL, '2022-06-18 21:24:17', '2022-06-18 21:24:17'),
-(4, 'warning_quantity', '5', '2022-06-18 21:24:17', '2022-06-18 21:45:43');
+(1, 'app_name', 'Laravel-POS', '2022-07-15 05:51:19', '2022-07-15 05:51:19'),
+(2, 'currency_symbol', 'Rp', '2022-07-15 05:51:19', '2022-07-17 23:37:29'),
+(3, 'app_description', NULL, '2022-07-17 23:37:29', '2022-07-17 23:37:29'),
+(4, 'warning_quantity', NULL, '2022-07-17 23:37:29', '2022-07-17 23:37:29');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -245,6 +260,7 @@ CREATE TABLE `users` (
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
+  `role_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -252,16 +268,17 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin', 'admin@mail.com', NULL, '$2y$10$HLalV8k7FcKnoaB0FAJU2..EuGmx/tDxLW4H69eSnKthdHa./HiZm', NULL, '2022-06-18 11:34:59', '2022-06-18 21:17:00');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `email_verified_at`, `role_id`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin', 'admin@mail.com', NULL, '2', '$2y$10$1t6Bko9dSFalKD8hVunRf.CkQVf8y4HK5PyJY1zionn3Dh.wZeMVm', NULL, '2022-07-15 05:51:19', '2022-07-15 05:51:19'),
+(2, 'Pemilik', 'Toko', 'pemilik@mail.com', NULL, '1', '$2y$10$1XiAv2Pkt/acLGYXTp9K4uecvpT6OxtkTIJZdZqt4CexhymgqhGym', NULL, '2022-07-15 05:51:19', '2022-07-15 05:51:19');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_cart`
+-- Struktur dari tabel `user_cart`
 --
 
 CREATE TABLE `user_cart` (
@@ -271,37 +288,42 @@ CREATE TABLE `user_cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `user_cart`
---
-
-INSERT INTO `user_cart` (`user_id`, `product_id`, `quantity`) VALUES
-(1, 2, 1);
-
---
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `customers`
+-- Indeks untuk tabel `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD KEY `customers_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `failed_jobs`
+-- Indeks untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `journals`
+--
+ALTER TABLE `journals`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `orders`
+-- Indeks untuk tabel `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
@@ -309,7 +331,7 @@ ALTER TABLE `orders`
   ADD KEY `orders_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `order_items`
+-- Indeks untuk tabel `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
@@ -317,13 +339,13 @@ ALTER TABLE `order_items`
   ADD KEY `order_items_product_id_foreign` (`product_id`);
 
 --
--- Indexes for table `password_resets`
+-- Indeks untuk tabel `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `payments`
+-- Indeks untuk tabel `payments`
 --
 ALTER TABLE `payments`
   ADD PRIMARY KEY (`id`),
@@ -331,124 +353,136 @@ ALTER TABLE `payments`
   ADD KEY `payments_user_id_foreign` (`user_id`);
 
 --
--- Indexes for table `products`
+-- Indeks untuk tabel `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `products_barcode_unique` (`barcode`);
 
 --
--- Indexes for table `settings`
+-- Indeks untuk tabel `settings`
 --
 ALTER TABLE `settings`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `settings_key_unique` (`key`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- Indexes for table `user_cart`
+-- Indeks untuk tabel `user_cart`
 --
 ALTER TABLE `user_cart`
   ADD KEY `user_cart_user_id_foreign` (`user_id`),
   ADD KEY `user_cart_product_id_foreign` (`product_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT untuk tabel `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `failed_jobs`
+-- AUTO_INCREMENT untuk tabel `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `journals`
+--
+ALTER TABLE `journals`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `order_items`
+-- AUTO_INCREMENT untuk tabel `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `payments`
+-- AUTO_INCREMENT untuk tabel `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `settings`
+-- AUTO_INCREMENT untuk tabel `settings`
 --
 ALTER TABLE `settings`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `customers`
+-- Ketidakleluasaan untuk tabel `customers`
 --
 ALTER TABLE `customers`
   ADD CONSTRAINT `customers_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `orders`
+-- Ketidakleluasaan untuk tabel `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `order_items`
+-- Ketidakleluasaan untuk tabel `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `order_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `payments`
+-- Ketidakleluasaan untuk tabel `payments`
 --
 ALTER TABLE `payments`
   ADD CONSTRAINT `payments_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `payments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `user_cart`
+-- Ketidakleluasaan untuk tabel `user_cart`
 --
 ALTER TABLE `user_cart`
   ADD CONSTRAINT `user_cart_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,

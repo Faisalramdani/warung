@@ -19,8 +19,13 @@ class Order extends Model
 
     public function orderItem()
     {
-        return $this->belongsTo(OrderItem::class,'id');
+        return $this->hasOne(OrderItem::class);
     }
+
+    // public function orderItem()
+    // {
+    //     return $this->belongsTo(OrderItem::class,'id');
+    // }
 
     public function payments()
     {

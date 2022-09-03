@@ -19,7 +19,12 @@ class OrderController extends Controller
         if($request->end_date) {
             $orders = $orders->where('created_at', '<=', $request->end_date . ' 23:59:59');
         }
-        $orders = $orders->with(['items', 'payments', 'customer'])->latest()->paginate(10);
+
+        $orders = $orders->with(['items', 'payments', 'customer', 'orderItem'])
+                    ->orderBy('id','asc')
+                    ->latest()
+                    ->paginate(10);
+        // dd($orders);
 
         $total = $orders->map(function($i) {
             return $i->total();
@@ -34,18 +39,18 @@ class OrderController extends Controller
 
     public function store(OrderStoreRequest $request)
     {
-        
-        
+        // dd($request->all());
+
         $order = Order::create([
             'customer_id' => $request->customer_id,
             'user_id' => $request->user()->id,
         ]);
-        
+
         $cart = $request->user()->cart()->get();
 
         foreach ($cart as $item) {
-            
-            
+
+
             $order->items()->create([
                 'price' => $item->price * $item->pivot->quantity,
                 'quantity' => $item->pivot->quantity,
@@ -85,23 +90,22 @@ class OrderController extends Controller
 
         $pdf = PDF::loadview('orders.cetak-invoice',['orders'=>$orders])->setPaper('A4','landscape');
         return $pdf->stream();
-       
+
 
     }
 
     public function coupon(Request $request){
 
-       
+
 
         $orders = new Order();
 
         $orders = $orders->with(['items', 'payments', 'customer'])
                     ->where('id',$request->id)->first();
 
-
         $pdf = PDF::loadview('orders.cetak-kupon',['orders'=>$orders])->setPaper('A4','landscape');
         return $pdf->stream();
-       
+
 
     }
 

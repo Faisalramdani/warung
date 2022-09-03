@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-info-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{route('home')}}" class="brand-link">
         <img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -28,7 +28,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                @if(Auth::user()->role_id == 1)      
+                @if(Auth::user()->role_id == 1)
                 <li class="nav-item has-treeview">
                     <a href="{{ route('products.index') }}" class="nav-link {{ activeSegment('products') }}">
                         <i class="nav-icon fas fa-th-large"></i>
@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 @endif
-                @if(Auth::user()->role_id == 2)   
+                @if(Auth::user()->role_id == 2)
                 <li class="nav-item has-treeview">
                     <a href="{{ route('cart.index') }}" class="nav-link {{ activeSegment('cart') }}">
                         <i class="nav-icon fas fa-cart-plus"></i>
@@ -44,13 +44,17 @@
                     </a>
                 </li>
                 @endif
+
+                @if(Auth::user()->role_id == 2)
                 <li class="nav-item has-treeview">
                     <a href="{{ route('orders.index') }}" class="nav-link {{ activeSegment('orders') }}">
                         <i class="nav-icon fas fa-cart-plus"></i>
-                        <p>Penjualan</p>
+                        <p>Data Penjualan</p>
                     </a>
                 </li>
-                @if(Auth::user()->role_id == 2)   
+                @endif
+
+                @if(Auth::user()->role_id == 2)
                 <li class="nav-item has-treeview">
                     <a href="{{ route('customers.index') }}" class="nav-link {{ activeSegment('customers') }}">
                         <i class="nav-icon fas fa-users"></i>
@@ -58,17 +62,33 @@
                     </a>
                 </li>
                 @endif
-                
-                @if(Auth::user()->role_id == 1)   
-                <li class="nav-item has-treeview">
-                    <a href="{{ route('journal.index') }}" class="nav-link {{ activeSegment('journal') }}">
+
+                @if(Auth::user()->role_id == 1)
+
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
                         <i class="nav-icon fas fa-file"></i>
-                        <p>Laporan</p>
+                        <p>Laporan<i class="right fas fa-angle-left"></i></p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
+                            <a href="{{ route('journal.index') }}" class="nav-link {{ activeSegment('journal') }}">
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>Laporan Penjualan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="{{ route('report-journal') }}" class="nav-link {{ activeSegment('report.journal') }}">
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>Laporan Jurnal</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 @endif
 
-                @if(Auth::user()->role_id == 1)   
+                @if(Auth::user()->role_id == 1)
                 <li class="nav-item has-treeview">
                     <a href="{{ route('settings.index') }}" class="nav-link {{ activeSegment('settings') }}">
                         <i class="nav-icon fas fa-cogs"></i>

@@ -16,4 +16,11 @@ class Product extends Model
         'quantity',
         'status'
     ];
+
+    public function order_items(){
+
+        return $this->hasMany(OrderItem::class);
+
+    }
+
 }

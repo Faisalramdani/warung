@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { sum } from "lodash";
+import ModalDialog from "./ModalDialog";
 
 class Cart extends Component {
 
@@ -12,6 +13,7 @@ class Cart extends Component {
             cart: [],
             products: [],
             customers: [],
+            kembalian: "",
             barcode: "",
             search: "",
             customer_id: ""
@@ -28,6 +30,10 @@ class Cart extends Component {
         this.handleSeach = this.handleSeach.bind(this);
         this.setCustomerId = this.setCustomerId.bind(this);
         this.handleClickSubmit = this.handleClickSubmit.bind(this)
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeSubmit = this.handleChangeSubmit.bind(this)
+        // this.getKembalian = this.getKembalian.bind(this);
 
         // this.setInputChange = this.setInputChange.bind(this)
         // this.getInputChange = this.getInputChange.bind(this)
@@ -83,6 +89,7 @@ class Cart extends Component {
                 });
         }
     }
+
     handleChangeQty(product_id, qty) {
         const cart = this.state.cart.map(c => {
             if (c.id === product_id) {
@@ -106,10 +113,50 @@ class Cart extends Component {
         return sum(total).toFixed(2);
     }
 
-    // total kembalian
-    handleInputChange(event){
-       const change = this.getInputChange(event.target.value);
-       console.log(change);
+    // Handle input kembalian
+    handleChange(event){
+        const change = event.target.value;
+        this.setState({
+            kembalian: change
+        });
+    }
+
+    // handleClose
+
+
+    // Ambil total pembayaran dan kirimkan data kedalam database
+    handleChangeSubmit(e){
+        e.preventDefault();
+        // const amount = {
+        //     amount : this.state.kembalian
+        // };
+
+        // const customer_id = {
+        //     customer_id : this.state.customer_id
+        // }
+
+        // // Send a POST request
+        // axios({
+        //     method: 'post',
+        //     url: '/admin/orders',
+        //     data: {
+        //         firstName: 'Fred',
+        //         lastName: 'Flintstone'
+        //     }
+        // });
+
+        axios.post('/admin/orders', {
+            customer_id : this.state.customer_id, amount: this.state.kembalian
+         }).then(res => {
+            // console.log(res);
+            // console.log(res.data);
+            this.loadCart();
+            return res.data.redirect('/admin/orders');
+            // return res.redirect('/');
+
+        }).catch(err => {
+            Swal.showValidationMessage(err.response.data.message)
+        })
     }
 
     handleClickDelete(product_id) {
@@ -120,15 +167,18 @@ class Cart extends Component {
                 this.setState({ cart });
             });
     }
+
     handleEmptyCart() {
         axios.post("/admin/cart/empty", { _method: "DELETE" }).then(res => {
             this.setState({ cart: [] });
         });
     }
+
     handleChangeSearch(event) {
         const search = event.target.value;
         this.setState({ search });
     }
+
     handleSeach(event) {
         if (event.keyCode === 13) {
             this.loadProducts(event.target.value);
@@ -180,18 +230,12 @@ class Cart extends Component {
     setCustomerId(event) {
         this.setState({ customer_id: event.target.value });
     }
+
     handleClickSubmit() {
         Swal.fire({
             title: 'Received Amount',
             input: 'text',
             inputValue: this.getTotal(this.state.cart),
-            onOpen: () => {
-                const input = Swal.getInput()
-                input.oninput = () => {
-                  // perform validation here
-                  this.handleInputChange;
-                }
-              },
             showCancelButton: true,
             confirmButtonText: 'Send',
             showLoaderOnConfirm: true,
@@ -211,8 +255,9 @@ class Cart extends Component {
         })
 
     }
+
     render() {
-        const { cart, products, customers, barcode } = this.state;
+        const { cart, products, customers, barcode,kembalian } = this.state;
         return (
             <div className="row">
                 <div className="col-md-6 col-lg-4">
@@ -311,14 +356,15 @@ class Cart extends Component {
                             </button>
                         </div>
                         <div className="col">
-                            <button
+                            {/* <button
                                 type="button"
                                 className="btn btn-primary btn-block"
                                 disabled={!cart.length}
                                 onClick={this.handleClickSubmit}
                             >
                                 Submit
-                            </button>
+                            </button> */}
+                            <ModalDialog handleSubmit={this.handleChangeSubmit} cart={!cart.length} value={this.state.kembalian} change={this.getTotal(this.state.cart)} kembalian={kembalian} onChange={this.handleChange} />
                         </div>
                     </div>
                 </div>
@@ -353,5 +399,7 @@ class Cart extends Component {
 export default Cart;
 
 if (document.getElementById("cart")) {
-    ReactDOM.render(<Cart />, document.getElementById("cart"));
+    // ReactDOM.render(<Cart />, document.getElementById("cart"));
+    const root = ReactDOM.createRoot(document.getElementById('cart'));
+    root.render(<Cart />);
 }

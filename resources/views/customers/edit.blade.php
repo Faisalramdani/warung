@@ -24,7 +24,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="last_name">Last Name</label>
                     <input type="text" name="last_name" class="form-control @error('last_name') is-invalid @enderror"
                            id="last_name"
@@ -34,7 +34,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                </div>
+                </div> --}}
 
                 {{-- <div class="form-group">
                     <label for="email">Email</label>

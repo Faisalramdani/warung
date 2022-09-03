@@ -46,9 +46,12 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $i = 1;
+                @endphp
                 @foreach ($orders as $order)
                 <tr>
-                    <td>{{$order->id}}</td>
+                    <td>{{$i++}}</td>
                     <td>{{$order->getCustomerName()}}</td>
                     <td>{{$order->orderItem->code_transaction}}</td>
                     <td>{{ config('settings.currency_symbol') }} {{$order->formattedTotal()}}</td>
@@ -73,6 +76,7 @@
                                     <input type="hidden" name="id" value="{{ $order->id }}">
                                     <button class="btn btn-sm btn-success mr-2">Cetak Invoice</button>
                                 </form>
+                                <br></br>
                                 <form action="{{ route('coupon') }}" method="post">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $order->id }}">

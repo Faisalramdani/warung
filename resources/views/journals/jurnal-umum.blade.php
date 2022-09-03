@@ -11,21 +11,21 @@
 @section('content')
 <div class="card product-list">
     <div class="card-header">
-        <form action="{{ route('journal') }}" method="Post" target="_blank">
+        <form action="{{ route('print-journal') }}" method="Post" target="_blank">
             @csrf
             <fieldset>
                 <div class="form-group row">
-                    <input type="hidden" name="periode" value="All">
-                        {{-- <div class="col-md-4">
-                            <label for="klasifikasi">Periode Laporan</label>
-                            <input id="jenis" type="hidden" name="jenis" value="bukubesar" class="form-control">
-                                            <select id="periode" name="periode" class="form-control">
+                        <div class="col-md-4">
+                            {{-- <label for="klasifikasi">Periode Laporan</label> --}}
+                            <input type="hidden" name="periode" value="All">
+                            {{-- <input id="jenis" type="hidden" name="jenis" value="bukubesar" class="form-control"> --}}
+                                            {{-- <select id="periode" name="periode" class="form-control">
                                                 <option value="">--Pilih Periode Laporan--</option>
                                                 <option value="All">Semua</option>
                                                 <option value="periode">Per Periode</option>
-                                            </select>
+                                            </select> --}}
                         </div>
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3">
                             <label for="no_hp">Tanggal Awal</label>
                             <input id="tglawal" type="date" name="tglawal" class="form-control">
                         </div>
@@ -43,35 +43,56 @@
     <div class="card-body">
         <table class="table">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Pembeli</th>
-                    <th>Jumlah</th>
-                    <th>Pembayaran</th>
-                    <th>Tanggal</th>
+                <tr class="bg-secondary">
+                    <th>Nama</th>
+                    <th colspan="2">Akun</th>
+                    <th>Debit</th>
+                    <th>Kredit</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($orders as $o)
-                <tr>
-                    <td>{{$o->id}}</td>
-                    <td>{{$o->getCustomerName()}}</td>
-                    <td>{{ config('settings.currency_symbol') }} {{$o->formattedReceivedAmount()}}</td>
-                    <td>
-                        @if($o->receivedAmount() == 0)
-                            <span class="badge badge-danger">Belum Bayar</span>
-                        @elseif($o->receivedAmount() < $o->total())
-                            <span class="badge badge-warning">Kurang</span>
-                        @elseif($o->receivedAmount() == $o->total())
-                            <span class="badge badge-success">Lunas</span>
-                        @elseif($o->receivedAmount() > $o->total())
-                            <span class="badge badge-info">Kembalian</span>
-                        @endif
-                    </td>
-                    <td>{{$o->created_at}}</td>
-                </tr>
+                {{-- Looping data jurnal --}}
+                @foreach ($orders as $order)
+                    @foreach ($order->items as $item)
+                    {{-- {{$item}} --}}
+                    <tr>
+                        <td>{{ $order_items->product->name }}</td>
+                        <td colspan="2">5.2.0 - Kas</td>
+                        <td>{{ floor($item->price) }}</td>
+                        <td>0</td>
+                    </tr>
+                    @if($item)
+                    <tr>
+                        <td>{{ $order_items->product->name }}</td>
+                        <td colspan="2">5.2.1 - Penjualan</td>
+                            <td>0</td>
+                            <td>{{ floor($item->price) }}</td>
+                        </tr>
+                    @else
+
+                    @endif
+                    @endforeach
                 @endforeach
+                {{-- <tr>
+                    <td colspan="2">5.2.1 - Pembelian</td>
+                    <td>0</td>
+                    <td>25000</td>
+                </tr> --}}
             </tbody>
+            <tfoot>
+                @php
+                    $total = 0;
+                @endphp
+
+                    {{-- @foreach ($order->items as $item) --}}
+                        <tr class="bg-secondary">
+                            <td colspan="3"><b>Total</b></td>
+                            <td><b>{{ floor($debit) }}</b></td>
+                            <td><b>{{ floor($debit) }}</b></td>
+                        </tr>
+                    {{-- @endforeach     --}}
+                {{-- @endforeach --}}
+            </tfoot>
         </table>
         {{-- {{ $journal->render() }} --}}
     </div>

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Create Customer')
-@section('content-header', 'Create Customer')
+@section('title', 'Tambah Pelanggan')
+@section('content-header', 'Tambah Pelanggan')
 
 @section('content')
 
@@ -12,7 +12,7 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="first_name">Nama depan</label>
+                    <label for="first_name">Nama </label>
                     <input type="text" name="first_name" class="form-control @error('first_name') is-invalid @enderror"
                            id="first_name"
                            placeholder="First Name" value="{{ old('first_name') }}">
@@ -33,7 +33,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                     @enderror
-                </div>
+                </div> 
 
                 {{-- <div class="form-group">
                     <label for="email">Email</label>

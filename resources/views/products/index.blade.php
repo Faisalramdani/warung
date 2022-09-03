@@ -3,7 +3,7 @@
 @section('title', 'Produk')
 @section('content-header', 'Produk')
 @section('content-actions')
-<a href="{{route('products.create')}}" class="btn btn-primary">Create Product</a>
+<a href="{{route('products.create')}}" class="btn btn-primary">Tambah produk</a>
 @endsection
 @section('css')
 <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}">
@@ -17,7 +17,7 @@
                     <th>ID</th>
                     <th>Nama</th>
                     <th>Gambar</th>
-                    <th>Barcode</th>
+                    <th>Kode produk</th>
                     <th>Harga Beli</th>
                     <th>Harga Jual</th>
                     <th>Jumlah</th>

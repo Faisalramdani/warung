@@ -138,12 +138,18 @@ DARMA 1 galon dapat 1 Kupon
             </h1>
             <div class="box-2">
                 <h1 class="text-box">
-                    {{ $orders->customer->first_name }}
+                    @php
+                        $customer =  "Working Customer";
+                    @endphp
+                    @if ($orders->customer > 0)
+                        {{ $orders->customer->first_name }}
+                    @endif
+                        {{ $customer }}
                 </h1>
             </div>
             <h2 class="text-footer">
-                Kumpulkan 10 Lembar Kupon dapat di tukarkan dengan AIR Minum Mineral DARMA 
-                <br><b>1 Galon Gratis!!!</b></br> 
+                Kumpulkan 10 Lembar Kupon dapat di tukarkan dengan AIR Minum Mineral DARMA
+                <br><b>1 Galon Gratis!!!</b></br>
                 <br>Tidak dapat di uangkan!!!</br>
             </h2>
         </div>

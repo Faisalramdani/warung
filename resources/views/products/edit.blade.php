@@ -24,7 +24,7 @@
             </div>
 
 
-            <div class="form-group">
+            {{--<div class="form-group">
                 <label for="description">Deskripsi</label>
                 <textarea name="description" class="form-control @error('description') is-invalid @enderror"
                     id="description"
@@ -34,7 +34,7 @@
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
-            </div>
+            </div>--}}
 
             <div class="form-group">
                 <label for="image">Gambar</label>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="form-group">
-                <label for="barcode">Barcode</label>
+                <label for="barcode">Kode produk</label>
                 <input type="text" name="barcode" class="form-control @error('barcode') is-invalid @enderror"
                     id="barcode" placeholder="barcode" value="{{ old('barcode', $product->barcode) }}">
                 @error('barcode')

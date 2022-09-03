@@ -13,4 +13,6 @@ require('./bootstrap');
  */
 
 require('./components/Cart');
-require('./components/HelloReact');
+require('./components/ModalDialog');
+// require('./components/ModalReact');
+// require('./components/ModalDialog');

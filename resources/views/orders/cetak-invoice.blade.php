@@ -22,7 +22,7 @@ font-size: 10pt;
 <tr>
 <th width="5%">ID</th>
 <th width="15%">Pembeli</th>
-<th width="5%">Jumlah</th>
+<th width="5%">Harga</th>
 <th width="5%">Qty</th>
 <th width="5%">Pembayaran</th>
 <th width="5%">Tanggal</th>
