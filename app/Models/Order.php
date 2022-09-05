@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
+     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'order_id';
+
     protected $fillable = [
         'customer_id',
         'user_id',
@@ -14,12 +22,12 @@ class Order extends Model
 
     public function items()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(OrderItem::class,'order_id');
     }
 
     public function orderItem()
     {
-        return $this->hasOne(OrderItem::class);
+        return $this->hasOne(OrderItem::class,'order_id','order_id');
     }
 
     // public function orderItem()
@@ -29,7 +37,7 @@ class Order extends Model
 
     public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class,'order_id','order_id');
     }
 
     public function customer()

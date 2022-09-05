@@ -11,7 +11,7 @@ use PDF;
 class OrderController extends Controller
 {
     public function index(Request $request) {
-
+        // dd($request->all());
         $orders = new Order();
         if($request->start_date) {
             $orders = $orders->where('created_at', '>=', $request->start_date);
@@ -21,7 +21,7 @@ class OrderController extends Controller
         }
 
         $orders = $orders->with(['items', 'payments', 'customer', 'orderItem'])
-                    ->orderBy('id','asc')
+                    ->orderBy('order_id','asc')
                     ->latest()
                     ->paginate(10);
         // dd($orders);
@@ -43,7 +43,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'customer_id' => $request->customer_id,
-            'user_id' => $request->user()->id,
+            'user_id' => $request->user()->user_id,
         ]);
 
         $cart = $request->user()->cart()->get();
@@ -63,7 +63,7 @@ class OrderController extends Controller
         $request->user()->cart()->detach();
         $order->payments()->create([
             'amount' => $request->amount,
-            'user_id' => $request->user()->id,
+            'user_id' => $request->user()->user_id,
         ]);
         return 'success';
     }
@@ -80,7 +80,9 @@ class OrderController extends Controller
         $orders = new Order();
 
         $orders = $orders->with(['items', 'payments', 'customer'])
-                    ->where('id',$request->id)->get();
+                    ->where('order_id',$request->id)->get();
+
+                    // dd($orders);
 
         // $order = Order::all();
 
@@ -101,7 +103,7 @@ class OrderController extends Controller
         $orders = new Order();
 
         $orders = $orders->with(['items', 'payments', 'customer'])
-                    ->where('id',$request->id)->first();
+                    ->where('order_id',$request->id)->first();
 
         $pdf = PDF::loadview('orders.cetak-kupon',['orders'=>$orders])->setPaper('A4','landscape');
         return $pdf->stream();

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id();
+            $table->id('customer_id');
             $table->string('first_name', 20);
             $table->string('last_name', 20);
             // $table->string('email')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 

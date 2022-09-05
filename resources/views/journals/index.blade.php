@@ -54,7 +54,7 @@
             <tbody>
                 @foreach ($orders as $o)
                 <tr>
-                    <td>{{$o->id}}</td>
+                    <td>{{$o->order_id}}</td>
                     <td>{{$o->getCustomerName()}}</td>
                     <td>{{ config('settings.currency_symbol') }} {{$o->formattedReceivedAmount()}}</td>
                     <td>

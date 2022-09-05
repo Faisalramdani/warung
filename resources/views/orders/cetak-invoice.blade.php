@@ -39,7 +39,7 @@ $subtotal2 = 0;
 <!-- pembuatan prulangan bersarang -->
 {{-- @if($loop->parent->first) --}}
 <tr>
-<th>{{$bb->id}}</th>
+<th>{{$bb->order_id}}</th>
 <th>{{$bb->getCustomerName()}}</th>
 <th>{{ config('settings.currency_symbol') }} {{$bb->formattedReceivedAmount()}}</th>
 <th>{{$bb->orderItem->quantity}}</th>

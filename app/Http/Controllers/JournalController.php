@@ -34,6 +34,8 @@ class JournalController extends Controller
 
         $orders = $orders->with(['items', 'payments', 'customer'])->latest()->paginate(10);
 
+        // dd($orders);
+
         $total = $orders->map(function($i) {
             return $i->total();
         })->sum();

@@ -73,13 +73,13 @@
                         <div class="form-group row">
                                 <form action="{{ route('invoice') }}" method="Post" >
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $order->id }}">
+                                    <input type="hidden" name="id" value="{{ $order->order_id }}">
                                     <button class="btn btn-sm btn-success mr-2">Cetak Invoice</button>
                                 </form>
                                 <br></br>
                                 <form action="{{ route('coupon') }}" method="post">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $order->id }}">
+                                    <input type="hidden" name="id" value="{{ $order->order_id }}">
                                     <button class="btn btn-sm btn-warning">Cetak Kupon</button>
                                 </form>
                             </div>

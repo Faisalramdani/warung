@@ -3382,13 +3382,13 @@ var Cart = /*#__PURE__*/function (_Component) {
         customer_id: this.state.customer_id,
         amount: this.state.kembalian
       }).then(function (res) {
-        // console.log(res);
-        // console.log(res.data);
         _this6.loadCart();
 
-        return res.data.redirect('/admin/orders'); // return res.redirect('/');
+        window.location = '/admin/orders';
       })["catch"](function (err) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_4___default().showValidationMessage(err.response.data.message);
+        _this6.loadCart();
+
+        window.location = '/admin/orders';
       });
     }
   }, {

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_items', function (Blueprint $table) {
-            $table->id();
+            $table->id('order_item_id');
             $table->decimal('price', 8, 4);
             $table->integer('quantity')->default(1);
             $table->foreignId('order_id');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('code_transaction',20);
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('order_id')->references('order_id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }

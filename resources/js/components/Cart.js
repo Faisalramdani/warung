@@ -148,14 +148,13 @@ class Cart extends Component {
         axios.post('/admin/orders', {
             customer_id : this.state.customer_id, amount: this.state.kembalian
          }).then(res => {
-            // console.log(res);
-            // console.log(res.data);
+
             this.loadCart();
-            return res.data.redirect('/admin/orders');
-            // return res.redirect('/');
+            window.location = '/admin/orders';
 
         }).catch(err => {
-            Swal.showValidationMessage(err.response.data.message)
+            this.loadCart();
+            window.location = '/admin/orders';
         })
     }
 
